@@ -5,13 +5,7 @@ var sql = require('mssql'); // MS Sql Server client
 var getlogic = require('./logic/getlogic');
 
 // Connection string parameters.
-var sqlConfig = {
-    
-    user:'sa',
-    password: 'Terminator8',
-    server: 'localhost',
-    database: 'TopStyleDb'
-}
+
 
 // Start server and listen on http://localhost:8081/
 var server = app.listen(8081, function () {
