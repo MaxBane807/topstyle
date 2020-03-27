@@ -4,7 +4,7 @@ var app = express();
 var sql = require('mssql'); // MS Sql Server client
 var getlogic = require('./logic/getlogic');
 
-// Connection string parameters.
+
 
 
 // Start server and listen on http://localhost:8081/
