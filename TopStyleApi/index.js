@@ -3,8 +3,9 @@ var express = require('express'); // Web Framework
 var app = express();
 var sql = require('mssql'); // MS Sql Server client
 var getlogic = require('./logic/getlogic');
+var ignoreData = require('./ignoreMisc/ignore');
 
-
+var sqlConfig = ignoreData.sqlSettings;
 
 
 // Start server and listen on http://localhost:8081/
@@ -26,6 +27,31 @@ app.get('/products/:typeId/', async function (req, res) {
             let answer = getlogic.sortProducts(recordsets.recordset);
 
             res.send(JSON.stringify(answer)); // Result in JSON format
+        });
+    });
+})
+
+app.get('/login/:username/:password/', async function (req, res, next) {
+    await sql.connect(sqlConfig, function() {
+        var request = new sql.Request();
+        request.input('UserName', req.params.username);
+        request.execute('GetCustomerByUserName', function(err, recordsets, returnValue, affected) {
+            if(err) console.log(err);
+            
+            if (recordsets.recordset.length === 1)
+            {
+                if(recordsets.recordset[0].Password === req.params.password)
+                {
+                    res.send(JSON.stringify(true));
+                }
+                else
+                {
+                    res.send(JSON.stringify(false));
+                }
+            }
+            else{
+                res.send(JSON.stringify(false));
+            }
         });
     });
 })
