@@ -1,4 +1,4 @@
-import React,{UseState,CreateContext} from './node_modules/react';
+import React,{useState,useContext} from 'react';
 
 export const ProductContext = React.createContext();
 
@@ -6,6 +6,8 @@ export const ProductContext = React.createContext();
 const productContextProvider = (props) => {
 
     const initialstate = {}
+
+    const [products,changeProducts] = useState(initialstate);
 
     return (<ProductContext.Provider value={allProducts}>
 
