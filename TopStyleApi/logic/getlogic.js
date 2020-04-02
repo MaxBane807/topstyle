@@ -2,45 +2,76 @@
 
 var sortProducts = function(productsset)
 {
-    let materials = [];
-    let otherdescriptions = [];
-    let percentages = [];
-    let counter = 0;
-    for (let obj of productsset)
-    {
-        materials.push(obj.Description[0]);
-        
-        if (counter == 0)
+    
+    let prevName = "";
+    let objToMake = 0;
+    let newObjArrey = [];
+    
+    for (let obj of productsset){
+
+        if (obj.Name == prevName)
         {
-            for(let x = 0;x < obj.Description.length; x++)
-            {
-                if (x>0)
-                {
-                    otherdescriptions.push(obj.Description[x]);
-                }
-            }
+            prevName = obj.Name;
         }
-        counter++;
-        percentages.push(obj.Percentage);
+        else
+        {
+            prevName = obj.Name;
+            objToMake++;
+        }
     }
     
-    let otherDesObj = {text: otherdescriptions[0], type: otherdescriptions[1]};
-    let desobjects = [];
-
-    counter = 0;
-    for (let mat of materials)
+    let globalcounter = 0;
+    while (objToMake > 0)
     {
-        let matObj = {material: mat, percent: percentages[counter]};
-        desobjects.push(matObj);
-        counter++;
+        let materials = [];
+        let otherdescriptions = [];
+        let percentages = [];
+        let counter = 0;
+        let answer = {};
+        
+        for (let y = globalcounter; y < 2; y++)
+        {
+            materials.push(productsset[y].Description[0]);
+        
+            if (counter == 0)
+            {
+                for(let x = 0;x < productsset[y].Description.length; x++)
+                {
+                    if (x>0)
+                    {
+                        otherdescriptions.push(productsset[y].Description[x]);
+                    }
+                }
+            }
+            counter++;
+            percentages.push(productsset[y].Percentage);
+            answer = productsset[globalcounter];
+            globalcounter++;    
+            
+        }
+        
+        //Gör en loop här
+        let otherDesObj = {text: otherdescriptions[0], type: otherdescriptions[1]};
+        
+        let desobjects = [];
+
+        counter = 0;
+        for (let mat of materials)
+        {
+            let matObj = {material: mat, percent: percentages[counter]};
+            desobjects.push(matObj);
+            counter++;
+        }
+        desobjects.push(otherDesObj);
+
+        
+        answer.Description = desobjects;
+        delete answer.Percentage;
+
+        newObjArrey.push(answer);
+        objToMake--;
     }
-    desobjects.push(otherDesObj);
-
-    let answer = productsset[0];
-    answer.Description = desobjects;
-    delete answer.Percentage;
-
-    return answer;
+    return newObjArrey;
 }
 
 
