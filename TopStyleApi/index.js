@@ -36,6 +36,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(express.json());
+app.use(express.urlencoded());
+
 app.get('/products/:typeId/', async function (req, res) {
     await sql.connect(sqlConfig, function() {
         var request = new sql.Request();

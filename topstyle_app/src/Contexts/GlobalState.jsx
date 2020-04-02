@@ -1,11 +1,16 @@
 import React from 'react';
 import ProductState from './Product/ProductState';
+import UserState from './User/UserState';
 
 
 const GlobalState = ({children}) => {
 
     return (
-        <ProductState>{children}</ProductState>
+        <ProductState>
+            <UserState>
+            {children}
+            </UserState>
+          </ProductState>
       );
 
 

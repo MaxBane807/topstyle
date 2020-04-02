@@ -1,8 +1,15 @@
-import {createContext} from 'react';
+import React,{createContext} from 'react';
 
 const initialState = {
 
-    createUser: () => {}
+    NewUser: ({
+        username,
+        password,
+        firstname,
+        lastname,
+        phone,
+        email
+    }) => {}
 
 
 };
