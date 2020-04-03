@@ -47,23 +47,22 @@ app.get('/products/:typeId/', async function (req, res) {
             if(err) console.log(err);
             
             //Sorting data
-            //let answer = getlogic.sortProducts(recordsets.recordset);
-            res.json(recordsets.recordset);
-            //res.send(JSON.stringify(answer)); // Result in JSON format
+            let answer = getlogic.sortProducts(recordsets.recordset);        
+            res.send(JSON.stringify(answer)); // Result in JSON format
         });
     });
 })
 
-app.get('/login/:username/:password/', async function (req, res, next) {
+app.post('/login', async function (req, res, next) {
     await sql.connect(sqlConfig, function() {
         var request = new sql.Request();
-        request.input('UserName', req.params.username);
+        request.input('UserName', req.body.username);
         request.execute('GetCustomerByUserName', function(err, recordsets, returnValue, affected) {
             if(err) console.log(err);
             
             if (recordsets.recordset.length === 1)
             {
-                if(recordsets.recordset[0].Password === req.params.password)
+                if(recordsets.recordset[0].Password === req.body.password)
                 {
                     res.send(JSON.stringify(true));
                 }

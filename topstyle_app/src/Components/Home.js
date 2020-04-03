@@ -1,6 +1,8 @@
 import React,{useContext, useState, useEffect} from 'react';
-import Products from './Products';
 import ProductContext from '../Contexts/Product/ProductContext';
+import { useRouteMatch, Switch, Route } from 'react-router-dom';
+import ProductDetails from './ProductDetails';
+import ProductOverview from './ProductOverview';
 //Lägg varukorgskomponenten här i.
 const Home = () => {
 
@@ -8,22 +10,38 @@ const Home = () => {
 
     const [products, setProducts] = useState(allProducts);
 
+   
+
     useEffect(() => {
 
         setProducts(allProducts);
 
     }, [allProducts]);
 
+    let match = useRouteMatch();
+
     if (!products){
         return(<h1>Loading...</h1>)
-    }
+    } 
 
-    return(
-    <React.Fragment>
-    <h1>Välkommen till TopStyle!</h1>
-    <Products products={products}/>  
-    </React.Fragment>
-    );
+    let list = products.map(item => {
+
+        return(<li><ProductOverview Product={item}/></li>);
+    });
+
+       
+
+
+    return(<React.Fragment>
+        <h1>Välkommen till TopStyle!</h1>
+        
+        <Switch>
+            <Route path={`${match.path}/:ProductID`}><ProductDetails/></Route>
+            <Route path={match.path}><ul>{list}</ul></Route>
+        </Switch>
+    </React.Fragment>);
+
+    
 
 }
 

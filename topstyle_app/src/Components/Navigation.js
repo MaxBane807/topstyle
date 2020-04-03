@@ -7,10 +7,13 @@ const Navigation = () => {
     return(
     <ul>
         <li>
-            <NavLink to="/">Hem</NavLink>
+            <NavLink to="/Home">Hem</NavLink>
         </li>
         <li>
-            <NavLink to="CreateAccount">Skapa konto</NavLink>
+            <NavLink to="/CreateAccount">Skapa konto</NavLink>
+        </li>
+        <li>
+            <NavLink to="/Login">Logga in</NavLink>
         </li>
     </ul>
     );

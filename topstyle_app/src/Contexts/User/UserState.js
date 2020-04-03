@@ -1,11 +1,13 @@
 import UserContext from './UserContext';
 import React, { useReducer, useState } from 'react';
-import { createUser } from '../../Api';
+import { createUser, loginUser } from '../../Api';
 
 
 const UserState = ({children}) => {
 
-    const [userState, setUser] = useState();
+    const [LoggedIn, setLoggedIn] = useState(false);
+
+
 
     const NewUser = (
         username,
@@ -22,9 +24,22 @@ const UserState = ({children}) => {
             email});
     };
 
+    const Login = (username,password) => {
+        
+        if (loginUser({username,password}))
+        {
+            setLoggedIn(true);
+            return true;
+        }
+        else
+        {
+            return false;
+        }  
+    } 
+
     
 
-    return(<UserContext.Provider value={{NewUser}}>
+    return(<UserContext.Provider value={{LoggedIn,NewUser,Login}}>
         {children}
     </UserContext.Provider>);
 
