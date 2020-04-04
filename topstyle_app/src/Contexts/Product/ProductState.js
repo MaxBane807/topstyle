@@ -1,5 +1,5 @@
 import React,{useState,useContext,useReducer, useEffect} from 'react';
-import {getAllProducts} from '../../Api';
+import {getAllProducts, getProductByID} from '../../Api';
 import ProductContext from "./ProductContext";
 import ProductReducer, { updateProducts } from "./ProductReducer";
 
@@ -18,13 +18,19 @@ const ProductState = ({children}) => {
         });    
     };
 
+    const fetchProductByID = async productID => {
+
+        return await getProductByID(productID);
+    }
+
     useEffect(() => {
         fetchProducts();
     }, []);
 
     return (<ProductContext.Provider value={{
         allProducts:productState.allProducts, 
-        fetchProducts}}>
+        fetchProducts,
+        fetchProductByID}}>
         {children}
     </ProductContext.Provider>);
 };

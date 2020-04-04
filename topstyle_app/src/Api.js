@@ -45,3 +45,17 @@ export const loginUser = async user => {
     .then(response => response.json())
     .then(result => {return result;});
 }
+
+export const getProductByID = async productID => {
+
+    const url = 'http://localhost:8081/product/' + productID;
+
+    return fetch(url)
+    .then(response => response.json())
+    .then(product => {
+
+        return product;
+
+    });
+
+}

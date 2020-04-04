@@ -4,8 +4,9 @@ import {createContext} from 'react';
 const initialState = {
 
     allProducts: [],
-    fetchProducts: () => {}
-
+    fetchProducts: () => {},
+    fetchProductByID: (productID) => {},
+    modifyProductsBySearch: (search) => {}
 };
 
 const ProductContext = createContext(initialState);

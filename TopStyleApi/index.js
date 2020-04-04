@@ -53,6 +53,20 @@ app.get('/products/:typeId/', async function (req, res) {
     });
 })
 
+app.get('/product/:productId/', async function (req, res) {
+    await sql.connect(sqlConfig, function() {
+        var request = new sql.Request();
+        request.input('ProductID', req.params.productId);
+        request.execute('GetProductByID', function(err, recordsets, returnValue, affected) {
+            if(err) console.log(err);
+            
+            //Sorting data
+            let answer = getlogic.sortProducts(recordsets.recordset);        
+            res.send(JSON.stringify(answer)); // Result in JSON format
+        });
+    });
+})
+
 app.post('/login', async function (req, res, next) {
     await sql.connect(sqlConfig, function() {
         var request = new sql.Request();
