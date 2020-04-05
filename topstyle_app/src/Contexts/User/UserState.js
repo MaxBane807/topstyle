@@ -7,8 +7,6 @@ const UserState = ({children}) => {
 
     const [LoggedIn, setLoggedIn] = useState(false);
 
-
-
     const NewUser = (
         username,
         password,
@@ -35,11 +33,16 @@ const UserState = ({children}) => {
         {
             return false;
         }  
-    } 
+    }
+
+    const Logout = () => {
+
+        setLoggedIn(false);
+    }
 
     
 
-    return(<UserContext.Provider value={{LoggedIn,NewUser,Login}}>
+    return(<UserContext.Provider value={{LoggedIn,NewUser,Login,Logout}}>
         {children}
     </UserContext.Provider>);
 

@@ -13,7 +13,9 @@ const initialState = {
         email
     }) => {},
 
-    Login: ({username,password}) => {}
+    Login: ({username,password}) => {},
+
+    Logout: () => {}
 };
 
 const UserContext = createContext(initialState);

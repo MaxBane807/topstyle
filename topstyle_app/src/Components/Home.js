@@ -3,33 +3,35 @@ import ProductContext from '../Contexts/Product/ProductContext';
 import { useRouteMatch, Switch, Route } from 'react-router-dom';
 import ProductDetails from './ProductDetails';
 import ProductOverview from './ProductOverview';
+import Search from './Search';
 //Lägg varukorgskomponenten här i.
 const Home = () => {
 
-    const {allProducts, fetchProducts} = useContext(ProductContext);
+    const {allProducts, fetchProducts, modifyProductsBySearch} = useContext(ProductContext);
 
-    const [products, setProducts] = useState(allProducts);
+    const [renderState, setRender] = useState();
 
    
-
     useEffect(() => {
 
-        setProducts(allProducts);
+        setRender({});
 
-    }, [allProducts]);
+    },[allProducts,modifyProductsBySearch]);
+    
+
 
     let match = useRouteMatch();
 
-    if (!products){
+    if (!allProducts){
         return(<h1>Loading...</h1>)
     } 
 
-    let list = products.map(item => {
+    
+
+    let list = allProducts.map(item => {
 
         return(<li><ProductOverview Product={item}/></li>);
     });
-
-       
 
 
     return(<React.Fragment>
@@ -37,7 +39,10 @@ const Home = () => {
         
         <Switch>
             <Route path={`${match.path}/:ProductID`}><ProductDetails/></Route>
-            <Route path={match.path}><ul>{list}</ul></Route>
+            <Route path={match.path}>
+                <Search/>
+                <ul>{list}</ul>
+            </Route>
         </Switch>
     </React.Fragment>);
 

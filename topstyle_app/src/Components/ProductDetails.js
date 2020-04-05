@@ -1,6 +1,8 @@
 import React, {useContext, useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import ProductContext from '../Contexts/Product/ProductContext';
+import CartContext from '../Contexts/Cart/CartContext';
+import UserContext from '../Contexts/User/UserContext';
 
 const ProductDetails = () => {
 
@@ -8,13 +10,23 @@ const ProductDetails = () => {
 
     const{fetchProductByID} = useContext(ProductContext);
 
+    const{addProduct} = useContext(CartContext);
+
+    const{LoggedIn} = useContext(UserContext);
+
     const [product, setProduct] = useState();
 
     useEffect(() => {
+        
+        let isMounted = true;
         (async () => {
-          setProduct(await fetchProductByID(ProductID));
+          if (isMounted){
+            setProduct(await fetchProductByID(ProductID));
+          }
         })();
-      }, [product]);
+
+        return () => {isMounted = false};
+      }, []);
 
     if (!product) {
       return <div>Loading...</div>;
@@ -42,6 +54,23 @@ const ProductDetails = () => {
       showInStock = "Nej";
     }
 
+    const reserveHandler = () => {
+
+      addProduct(product[0]);
+
+    }
+
+    let cartRelation;
+
+    if (LoggedIn)
+    {
+      cartRelation = (<button onClick={e => {reserveHandler();}}>Lägg till i varukorgen</button>);
+    }
+    else
+    {
+      cartRelation = (<h5>Logga in för att köpa!</h5>);
+    }
+
     return(<React.Fragment>
     <h1>{product[0].Name}</h1>
     <h3>Kategori: {product[0].Description[1]}</h3>
@@ -49,7 +78,7 @@ const ProductDetails = () => {
     <ul>{materialList[0]}</ul>
     <p>I lager: {showInStock}</p>
     <h4>Pris: {product[0].Price}</h4>
-
+    {cartRelation}
     </React.Fragment>);
 
 }

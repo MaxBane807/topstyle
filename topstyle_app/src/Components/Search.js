@@ -1,12 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import ProductContext from '../Contexts/Product/ProductContext';
 
 const Search = () => {
 
     let searchRef = useRef();
 
+    const{modifyProductsBySearch, allProducts} = useContext(ProductContext);
+
     const searchHandler = () => {
 
-        
+        modifyProductsBySearch(searchRef.current.value);
     }
 
     return(<React.Fragment>

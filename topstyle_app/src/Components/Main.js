@@ -4,6 +4,7 @@ import Home from './Home';
 import CreateAccount from './CreateAccount';
 import Login from './Login';
 import ProductDetails from './ProductDetails';
+import ShoppingCart from './ShoppingCart';
 
 
 const Main = () => {
@@ -15,6 +16,7 @@ const Main = () => {
         <Route path="/Home" component={Home}/>
         <Route path="/CreateAccount" component={CreateAccount}/>
         <Route path="/Login" component={Login}/>
+        <Route path="/ShoppingCart" component={ShoppingCart}/>
     </Switch>
     );
 
