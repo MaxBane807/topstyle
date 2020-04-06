@@ -46,7 +46,7 @@ app.get('/products/:typeId/', async function (req, res) {
         request.execute('GetProductsByType', function(err, recordsets, returnValue, affected) {
             if(err) console.log(err);
             
-            //Sorting data
+            //Sortera data
             let answer = getlogic.sortProducts(recordsets.recordset);        
             res.send(JSON.stringify(answer)); // Result in JSON format
         });
@@ -60,7 +60,7 @@ app.get('/product/:productId/', async function (req, res) {
         request.execute('GetProductByID', function(err, recordsets, returnValue, affected) {
             if(err) console.log(err);
             
-            //Sorting data
+            //Sortera data
             let answer = getlogic.sortProducts(recordsets.recordset);        
             res.send(JSON.stringify(answer)); // Result in JSON format
         });
@@ -78,7 +78,7 @@ app.post('/login', async function (req, res, next) {
             {
                 if(recordsets.recordset[0].Password === req.body.password)
                 {
-                    res.send(JSON.stringify(true));
+                    res.send(JSON.stringify(recordsets.recordset[0]));
                 }
                 else
                 {
@@ -109,3 +109,34 @@ app.post('/CreateUser', async function (req, res, next){
     });
 
 })
+
+app.post('/CreateOrder', async function (req, res, next){
+    await sql.connect(sqlConfig, function(){
+        var request = new sql.Request();
+        request.input('CustomerID',req.body.customerID);
+        request.input('OrderDate', req.body.orderdate);
+        request.input('TotalPrice',req.body.totalprice);       
+        request.execute('InsertOrUpdateOrder',function(err,recordsets,returnValue,affected){
+            if (err) console.log(err);
+            console.log(recordsets.recordset[0].InsertedOrder);
+            res.send(JSON.stringify(recordsets.recordset[0].InsertedOrder));
+        });
+
+    });
+
+})
+
+app.post('/RegisterOneProduct', async function (req, res, next){
+    await sql.connect(sqlConfig, function(){
+        var request = new sql.Request();
+        request.input('OrderID',req.body.orderID);
+        request.input('ProductID', req.body.productID);
+        request.input('Amount',req.body.amount);
+        request.execute('InsertOrderProduct',function(err,recordsets,returnValue,affected){
+            if (err) console.log(err);
+        });
+
+    });
+
+})
+

@@ -59,3 +59,37 @@ export const getProductByID = async productID => {
     });
 
 }
+
+export const saveOrder = async order => {
+
+    const url = 'http://localhost:8081/CreateOrder/';
+
+    return fetch(url,{
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(result => {return result;});
+
+}
+
+export const saveOrderProducts = async orderProduct => {
+
+    const url = 'http://localhost:8081/RegisterOneProduct/';
+
+    fetch(url,{
+        method: "POST",
+        body: JSON.stringify(orderProduct),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    .then(function(data) {
+        console.log("Request success: ", "posten skapad", data);
+        });
+}

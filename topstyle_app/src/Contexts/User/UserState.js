@@ -7,6 +7,8 @@ const UserState = ({children}) => {
 
     const [LoggedIn, setLoggedIn] = useState(false);
 
+    const [User, setUser] = useState("");
+
     const NewUser = (
         username,
         password,
@@ -22,11 +24,14 @@ const UserState = ({children}) => {
             email});
     };
 
-    const Login = (username,password) => {
+    const Login = async (username,password) => {
         
-        if (loginUser({username,password}))
+        let result = await loginUser({username,password});
+        
+        if (result)
         {
             setLoggedIn(true);
+            setUser(result);
             return true;
         }
         else
@@ -42,7 +47,7 @@ const UserState = ({children}) => {
 
     
 
-    return(<UserContext.Provider value={{LoggedIn,NewUser,Login,Logout}}>
+    return(<UserContext.Provider value={{LoggedIn,User,NewUser,Login,Logout}}>
         {children}
     </UserContext.Provider>);
 

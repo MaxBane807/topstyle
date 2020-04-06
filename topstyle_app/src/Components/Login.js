@@ -8,11 +8,19 @@ const Login = () => {
 
     const {Login} = useContext(UserContext);
 
-    const loginHandler = () => {
+    let failedLogin = (<p></p>);
 
-        if (Login(usernameRef.current.value,passwordRef.current.value))
+    const loginHandler = async () => {
+
+        let loginAtempt = await Login(usernameRef.current.value,passwordRef.current.value);
+        if (loginAtempt)
         {
             alert("Du är nu inloggad");
+            failedLogin = (<p></p>);
+        }
+        else
+        {
+            failedLogin = (<p>Felaktigt användarnamn eller lösenord</p>);
         }
 
     }
@@ -25,7 +33,9 @@ const Login = () => {
         <label htmlFor="password">Lösenord</label>
         <input ref={passwordRef} id="password" type="text"></input>
 
-        <button onClick={e => {loginHandler();}}>Logga in</button>
+        <button onClick={async e => {await loginHandler();}}>Logga in</button>
+
+        {failedLogin}
     </React.Fragment>);
 
 }

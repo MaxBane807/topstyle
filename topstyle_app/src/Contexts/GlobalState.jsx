@@ -8,11 +8,11 @@ const GlobalState = ({children}) => {
 
     return (
         <ProductState>
-            <CartState>
-                <UserState>
+            <UserState>
+                <CartState>
                     {children}
-                </UserState>
-            </CartState>
+                </CartState>
+            </UserState>
         </ProductState>
       );
 

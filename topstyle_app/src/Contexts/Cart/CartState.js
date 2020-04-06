@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CartContext from './CartContext';
+import {saveOrder,saveOrderProducts} from '../../Api';
 
 const CartState = ({children}) => {
 
@@ -13,12 +14,59 @@ const CartState = ({children}) => {
     }
     const clearCart = () => {
 
-        
+        setCart([]);
+    }
+
+    const makeOrder = async customerID => {
+
+        //orderDate
+        let today = new Date();
+        let orderdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        //Totalprice
+        let totalprice = 0;
+        for (let item of cart)
+        {
+            totalprice += item.Price;
+        }
+
+        let orderID = await saveOrder({customerID,orderdate,totalprice});
+        let localcart = cart;
+        orderID = parseInt(orderID);
+        while (localcart.length > 0)
+        {
+            
+            let productID = localcart[0].ProductID;
+            productID = parseInt(productID);
+            let removeIndexes = [];
+            let amount = localcart.reduce((total,item,currIndex) => {
+
+                if (item.ProductID == productID)
+                {                   
+                    removeIndexes.unshift(currIndex);
+                    return total += 1;
+                }
+                else 
+                {
+                    return total;
+                }
+            },0);
+
+            console.log(orderID,productID,amount);
+            await saveOrderProducts({orderID,productID,amount});
+            
+            for (let index of removeIndexes)
+            {
+                localcart.splice(index,1);
+            }
+        }
+             
     }
 
     return (<CartContext.Provider value={{
         cart,
-        addProduct}}>
+        addProduct,
+        clearCart,
+        makeOrder}}>
         {children}
     </CartContext.Provider>);
 

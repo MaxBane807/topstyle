@@ -4,6 +4,8 @@ const initialState = {
 
     LoggedIn: false,
 
+    User: "",
+
     NewUser: ({
         username,
         password,
