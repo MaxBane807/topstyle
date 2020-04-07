@@ -5,6 +5,7 @@ import CreateAccount from './CreateAccount';
 import Login from './Login';
 import ProductDetails from './ProductDetails';
 import ShoppingCart from './ShoppingCart';
+import Container from '@material-ui/core/Container';
 
 
 const Main = () => {
@@ -12,12 +13,15 @@ const Main = () => {
     let match = useRouteMatch();
 
     return(
-    <Switch>
-        <Route path="/Home" component={Home}/>
-        <Route path="/CreateAccount" component={CreateAccount}/>
-        <Route path="/Login" component={Login}/>
-        <Route path="/ShoppingCart" component={ShoppingCart}/>
-    </Switch>
+    <Container maxWidth="md">
+        <Switch>
+            <Route path="/Home" component={Home}/>
+            <Route path="/CreateAccount" component={CreateAccount}/>
+            <Route path="/Login" component={Login}/>
+            <Route path="/ShoppingCart" component={ShoppingCart}/>
+            <Route exact path="/" component={Home} />
+        </Switch>
+    </Container>
     );
 
 }
