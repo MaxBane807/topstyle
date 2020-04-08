@@ -93,3 +93,12 @@ export const saveOrderProducts = async orderProduct => {
         console.log("Request success: ", "posten skapad", data);
         });
 }
+
+export const checkUsername = async username => {
+
+    const url = 'http://localhost:8081/usernameCheck/' + username;
+
+    return fetch(url)
+            .then(response => response.json())
+            .then(result => {return result});
+}

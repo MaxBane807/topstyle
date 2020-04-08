@@ -1,6 +1,6 @@
 import UserContext from './UserContext';
 import React, { useReducer, useState } from 'react';
-import { createUser, loginUser } from '../../Api';
+import { createUser, loginUser, checkUsername} from '../../Api';
 
 
 const UserState = ({children}) => {
@@ -9,25 +9,37 @@ const UserState = ({children}) => {
 
     const [User, setUser] = useState("");
 
-    const NewUser = (
+    const NewUser = async (
         username,
         password,
         firstname,
         lastname,
         phone,
-        email) => {createUser ({
-            username,
-            password,
-            firstname,
-            lastname,
-            phone,
-            email});
+        email) => { 
+            
+            console.log("nu körs koden");
+            let check = await checkUsername(username);
+            if (check == true)
+            {
+                await createUser ({
+                username,
+                password,
+                firstname,
+                lastname,
+                phone,
+                email});
+                return true;
+            }
+            else
+            {
+                return false;
+            }
     };
 
     const Login = async (username,password) => {
         
         let result = await loginUser({username,password});
-        
+            
         if (result)
         {
             setLoggedIn(true);
@@ -47,7 +59,7 @@ const UserState = ({children}) => {
 
     
 
-    return(<UserContext.Provider value={{LoggedIn,User,NewUser,Login,Logout}}>
+    return(<UserContext.Provider value={{LoggedIn,User,NewUser,Login,Logout, checkUserName}}>
         {children}
     </UserContext.Provider>);
 

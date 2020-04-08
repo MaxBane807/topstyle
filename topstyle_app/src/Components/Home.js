@@ -4,6 +4,7 @@ import { useRouteMatch, Switch, Route } from 'react-router-dom';
 import ProductDetails from './ProductDetails';
 import ProductOverview from './ProductOverview';
 import Search from './Search';
+
 //Lägg varukorgskomponenten här i.
 const Home = () => {
 

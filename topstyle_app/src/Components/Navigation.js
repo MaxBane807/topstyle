@@ -1,7 +1,17 @@
 import React, { useContext, useState } from 'react';
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink, Redirect,Link} from 'react-router-dom';
 import UserContext from '../Contexts/User/UserContext';
 import CartContext from '../Contexts/Cart/CartContext';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 
 
 const Navigation = () => {
@@ -10,7 +20,17 @@ const Navigation = () => {
 
     const{clearCart} = useContext(CartContext);
 
+    let [drawerOpen,setDrawerOpen] = useState(false);
+
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
     
+        setDrawerOpen(open);
+    };
+
+   
 
     const logoutHandler = () => {
 
@@ -20,34 +40,53 @@ const Navigation = () => {
     }
 
     let cartlink;
-    let loginToggler =  (<li>
-                        <NavLink to="/Login">Logga in</NavLink>
-                        </li>);
+    let loginToggler =  (<MenuItem component={Link} to="/Login">
+                            Logga in
+                        </MenuItem>);
 
     if (LoggedIn == true)
     {
         cartlink = 
-        (<li>
-        <NavLink to="/ShoppingCart">Shoppingvagn</NavLink>
-        </li>);
+        (<MenuItem component={Link} to="/ShoppingCart">
+            Varukorg
+        </MenuItem>);
 
-        loginToggler = (<button onClick={e => {logoutHandler();}}>Logga ut</button>);
+        loginToggler = (<MenuItem component={"button"} onClick={e => {logoutHandler();}}>Logga ut</MenuItem>);
     }
 
     
 
-    return(
-    <ul>
-        <li>
-            <NavLink to="/Home">Hem</NavLink>
-        </li>
-        <li>
-            <NavLink to="/CreateAccount">Skapa konto</NavLink>
-        </li>
+    
+
+    return(<React.Fragment>
+        <AppBar position="static">
+            <Toolbar>
+                <Button onClick={toggleDrawer(true)}>Meny</Button>
+                <Typography variant="h1">TopStyle</Typography>
+            </Toolbar>
+        </AppBar>
+         <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
+         <div role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}>
+
+            <MenuList>
+                <MenuItem component={Link} to="/Home">
+                    Hem
+                </MenuItem>
+                <MenuItem component={Link} to="/CreateAccount">
+                    Skapa konto
+                </MenuItem>
+                
+                {loginToggler}
+                {cartlink}
+            </MenuList>
+
+            </div>
+          </Drawer>
         
-        {loginToggler}
-        {cartlink}
-    </ul>
+        
+    </React.Fragment>
     );
 
 }

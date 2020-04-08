@@ -67,6 +67,27 @@ app.get('/product/:productId/', async function (req, res) {
     });
 })
 
+app.get('/usernameCheck/:username', async function (req,res) {
+
+    await sql.connect(sqlConfig, function() {
+        var request = new sql.Request();
+        request.input('UserName', req.params.username);
+        request.execute('GetCustomerByUserName', function(err,recordsets,returnValue, affected){
+            if(err) console.log(err);
+            
+            if(recordsets.recordset.length > 0)
+            {
+                res.send(JSON.stringify(false));
+            }
+            else
+            {
+                res.send(JSON.stringify(true));
+            }
+        });
+
+    });
+})
+
 app.post('/login', async function (req, res, next) {
     await sql.connect(sqlConfig, function() {
         var request = new sql.Request();
