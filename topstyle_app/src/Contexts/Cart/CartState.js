@@ -6,15 +6,21 @@ const CartState = ({children}) => {
 
 
     const [cart, setCart] = useState([]);
+    const [nrOfItems, setNrOfItems] = useState(0);
 
     const addProduct = (product) => {
 
         setCart([...cart,product]);
+        setNrOfItems((prevcount) => {
+
+            return prevcount += 1;
+        });
 
     }
     const clearCart = () => {
 
         setCart([]);
+        setNrOfItems(0);
     }
 
     const makeOrder = async customerID => {
@@ -66,7 +72,8 @@ const CartState = ({children}) => {
         cart,
         addProduct,
         clearCart,
-        makeOrder}}>
+        makeOrder,
+        nrOfItems}}>
         {children}
     </CartContext.Provider>);
 

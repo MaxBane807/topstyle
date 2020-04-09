@@ -11,6 +11,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 
@@ -18,7 +20,7 @@ const Navigation = () => {
 
     const {LoggedIn,Logout} = useContext(UserContext);
 
-    const{clearCart} = useContext(CartContext);
+    const{clearCart, nrOfItems} = useContext(CartContext);
 
     let [drawerOpen,setDrawerOpen] = useState(false);
 
@@ -62,6 +64,7 @@ const Navigation = () => {
         <AppBar position="static">
             <Toolbar>
                 <Button onClick={toggleDrawer(true)}>Meny</Button>
+                <Badge badgeContent={nrOfItems}><ShoppingCartIcon fontSize="large"/></Badge>
                 <Typography variant="h1">TopStyle</Typography>
             </Toolbar>
         </AppBar>

@@ -59,7 +59,7 @@ const UserState = ({children}) => {
 
     
 
-    return(<UserContext.Provider value={{LoggedIn,User,NewUser,Login,Logout, checkUserName}}>
+    return(<UserContext.Provider value={{LoggedIn,User,NewUser,Login,Logout}}>
         {children}
     </UserContext.Provider>);
 

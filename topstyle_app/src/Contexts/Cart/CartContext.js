@@ -6,7 +6,8 @@ const initialState = {
     cart: [],
     addProduct: () => {},
     clearCart: () => {},
-    makeOrder: (customerID) => {}
+    makeOrder: (customerID) => {},
+    nrOfItems: 0
 };
 
 const CartContext = createContext(initialState);

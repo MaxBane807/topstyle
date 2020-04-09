@@ -4,14 +4,25 @@ import { useRouteMatch, Switch, Route } from 'react-router-dom';
 import ProductDetails from './ProductDetails';
 import ProductOverview from './ProductOverview';
 import Search from './Search';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-//Lägg varukorgskomponenten här i.
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    }
+  }));
+
+
 const Home = () => {
 
     const {allProducts, fetchProducts, modifyProductsBySearch} = useContext(ProductContext);
 
     const [renderState, setRender] = useState();
 
+    const classes = useStyles();
    
     useEffect(() => {
 
@@ -31,18 +42,19 @@ const Home = () => {
 
     let list = allProducts.map(item => {
 
-        return(<li><ProductOverview Product={item}/></li>);
+        return(<Grid item xs={5}><ProductOverview Product={item}/></Grid>);
     });
 
 
     return(<React.Fragment>
-        <h1>Välkommen till TopStyle!</h1>
+        
         
         <Switch>
-            <Route path={`${match.path}/:ProductID`}><ProductDetails/></Route>
+            <Route path={`/${match.path}/:ProductID`}><ProductDetails/></Route>
             <Route path={match.path}>
+                <Typography variant="h2">Välkommen till TopStyle!</Typography>
                 <Search/>
-                <ul>{list}</ul>
+                <Grid container spacing={4}>{list}</Grid>
             </Route>
         </Switch>
     </React.Fragment>);

@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import ProductContext from '../Contexts/Product/ProductContext';
 import CartContext from '../Contexts/Cart/CartContext';
 import UserContext from '../Contexts/User/UserContext';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const ProductDetails = () => {
 
@@ -71,15 +73,15 @@ const ProductDetails = () => {
       cartRelation = (<h5>Logga in för att köpa!</h5>);
     }
 
-    return(<React.Fragment>
-    <h1>{product[0].Name}</h1>
-    <h3>Kategori: {product[0].Description[1]}</h3>
-    <p>{product[0].Description[0]}</p>
+    return(<Paper>
+    <Typography variant="h3">{product[0].Name}</Typography>
+    <Typography variant="subtitle1">Kategori: {product[0].Description[1]}</Typography>
+    <Typography variant="body1">{product[0].Description[0]}</Typography>
     <ul>{materialList[0]}</ul>
     <p>I lager: {showInStock}</p>
     <h4>Pris: {product[0].Price}</h4>
     {cartRelation}
-    </React.Fragment>);
+    </Paper>);
 
 }
 
