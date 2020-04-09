@@ -78,8 +78,8 @@ const ProductDetails = () => {
     <Typography variant="subtitle1">Kategori: {product[0].Description[1]}</Typography>
     <Typography variant="body1">{product[0].Description[0]}</Typography>
     <ul>{materialList[0]}</ul>
-    <p>I lager: {showInStock}</p>
-    <h4>Pris: {product[0].Price}</h4>
+    <Typography variant="body1">I lager: {showInStock}</Typography>
+    <Typography variant="h4">Pris: {product[0].Price}</Typography>
     {cartRelation}
     </Paper>);
 

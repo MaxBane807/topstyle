@@ -17,6 +17,31 @@ const CartState = ({children}) => {
         });
 
     }
+
+    const removeProduct = (product) => {
+
+        let counter = 0;
+        let filteredarrey = cart.filter(item => 
+            { 
+                if (counter == 0)
+                {
+                    counter += 1;
+                    return (item !== product);                    
+                }
+                else
+                {
+                    return true;
+                }
+            });
+
+        setCart(filteredarrey);
+
+        setNrOfItems((prevcount) => {
+            return prevcount -= 1;
+        });
+
+    }
+
     const clearCart = () => {
 
         setCart([]);
@@ -73,6 +98,7 @@ const CartState = ({children}) => {
         addProduct,
         clearCart,
         makeOrder,
+        removeProduct,
         nrOfItems}}>
         {children}
     </CartContext.Provider>);

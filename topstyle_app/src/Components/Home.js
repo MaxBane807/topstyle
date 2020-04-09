@@ -50,8 +50,8 @@ const Home = () => {
         
         
         <Switch>
-            <Route path={`/${match.path}/:ProductID`}><ProductDetails/></Route>
-            <Route path={match.path}>
+            <Route path={`/Home/:ProductID`}><ProductDetails/></Route>
+            <Route path={'/Home'}>
                 <Typography variant="h2">Välkommen till TopStyle!</Typography>
                 <Search/>
                 <Grid container spacing={4}>{list}</Grid>

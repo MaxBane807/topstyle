@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch,Route, useRouteMatch} from 'react-router-dom';
+import {Switch,Route, useRouteMatch, Redirect} from 'react-router-dom';
 import Home from './Home';
 import CreateAccount from './CreateAccount';
 import Login from './Login';
@@ -19,7 +19,7 @@ const Main = () => {
             <Route path="/CreateAccount" component={CreateAccount}/>
             <Route path="/Login" component={Login}/>
             <Route path="/ShoppingCart" component={ShoppingCart}/>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/"><Redirect to="/Home"/></Route>
         </Switch>
     </Container>
     );

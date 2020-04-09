@@ -17,11 +17,12 @@ const useStyles = makeStyles({
     media: {
       height: 140,
     },
-  });
+});
 
-const ProductOverview = ({Product}) => {
+
+
+const ProductOverview = ({Product, Match}) => {
     const classes = useStyles();  
-    let Match = useRouteMatch();
 
     return (<Card className={classes.root}>
         <CardActionArea>
@@ -31,7 +32,7 @@ const ProductOverview = ({Product}) => {
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <Button color="primary" component={RouterLink} to={`/${Match.url}/${Product.ProductID}`}>Se mer</Button>
+            <Button color="primary" component={RouterLink} to={`/Home/${Product.ProductID}`}>Se mer</Button>
         </CardActions>  
     </Card>);
 
