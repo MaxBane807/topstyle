@@ -5,6 +5,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 const Search = () => {
 
@@ -19,8 +21,9 @@ const Search = () => {
 
     
 
-    return(<React.Fragment>
+    return(<Grid container alignItems="center">
         
+        <Grid item>
         <TextField 
             type="text" 
             inputRef={searchRef} 
@@ -30,14 +33,17 @@ const Search = () => {
             InputLabelProps={{shrink: true}}
         />
 
+        </Grid>
+
+        <Grid item>
         <Button 
             onClick={e => {searchHandler();}} 
             variant="contained"
             size="large"
             color="secondary"
             startIcon={<SearchIcon/>}>Sök</Button>
-
-    </React.Fragment>);
+        </Grid>
+    </Grid>);
 }
 
 export default Search;

@@ -8,7 +8,9 @@ const initialState = {
     clearCart: () => {},
     makeOrder: (customerID) => {},
     nrOfItems: 0,
-    removeProduct: () => {}
+    removeProduct: (product) => {},
+    totalprice: 0,
+    refreshTotal: () => {}
 };
 
 const CartContext = createContext(initialState);

@@ -1,6 +1,12 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import UserContext from '../Contexts/User/UserContext';
 import {Redirect} from 'react-router-dom'
+import { Typography } from '@material-ui/core';
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import Grid from '@material-ui/core/Grid';
 
 
 const Login = () => {
@@ -12,40 +18,82 @@ const Login = () => {
 
     const [redirect, setRedirect] = useState(false);
 
-    let failedLogin = (<p></p>);
+    const [render, setRender] = useState();
+    const [trylogin, setTryLogin] = useState(false);  
 
     const loginHandler = async () => {
 
         let loginAtempt = await Login(usernameRef.current.value,passwordRef.current.value);
         if (loginAtempt)
         {
-            alert("Du är nu inloggad");
-            failedLogin = (<p></p>);
+            
             setRedirect(true);
         }
         else
         {
-            failedLogin = (<p>Felaktigt användarnamn eller lösenord</p>);
+            
+            setTryLogin(true);
         }
 
     }
+
+    useEffect(() => {
+        setRender({});
+    },[trylogin]);
 
     if (redirect)
     {
         return(<Redirect to="/Home"/>);
     }
+
+    let failedLogin;
+
+    if(trylogin)
+    {
+        failedLogin = (<Typography variant="body1">Felaktigt användarnamn eller lösenord</Typography>);
+    }
+    else
+    {
+         failedLogin = (<p></p>);
+    }
     
     return (<React.Fragment>
-        <h1>Logga in</h1>
-        <label htmlFor="username">Användarnamn</label>
-        <input ref={usernameRef} id="username" type="text"></input>
+    
+        <Typography variant="h2">Logga in</Typography>
+        <Grid container alignItems="center">
+        
+        <Grid item>
+            <TextField 
+            required
+            inputRef={usernameRef}
+            variant="outlined"
+            label="Användarnamn"
+            style={{ margin: 16 }}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            />
+        </Grid>
 
-        <label htmlFor="password">Lösenord</label>
-        <input ref={passwordRef} id="password" type="password"></input>
+        <Grid item>
+            <TextField 
+            required
+            inputRef={passwordRef}
+            variant="outlined"
+            label="Lösenord"
+            style={{ margin: 16 }}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            type="password"
+            />
+        </Grid>
 
-        <button onClick={async e => {await loginHandler();}}>Logga in</button>
+        <Button color="secondary" variant="contained" startIcon={<LockOpenIcon/>} onClick={async e => {await loginHandler();}}>Logga in</Button>
 
-        {failedLogin}
+        
+    </Grid>
+    {failedLogin}
     </React.Fragment>);
 
 }

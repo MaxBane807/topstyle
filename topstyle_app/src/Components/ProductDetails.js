@@ -5,8 +5,35 @@ import CartContext from '../Contexts/Cart/CartContext';
 import UserContext from '../Contexts/User/UserContext';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from "@material-ui/core/Button";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Backdrop from '@material-ui/core/Backdrop';
+import Box from '@material-ui/core/Box';
+import { grey } from '@material-ui/core/colors';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 180,
+  },
+  marginAutoItem: {
+    margin: 'auto'
+  }
+});
+
 
 const ProductDetails = () => {
+
+    const classes = useStyles();
 
     let {ProductID} = useParams();
 
@@ -66,22 +93,43 @@ const ProductDetails = () => {
 
     if (LoggedIn)
     {
-      cartRelation = (<button onClick={e => {reserveHandler();}}>Lägg till i varukorgen</button>);
+      cartRelation = (<Button startIcon={<ShoppingCartIcon/>} color="secondary" onClick={e => {reserveHandler();}}>Lägg till i varukorgen</Button>);
     }
     else
     {
-      cartRelation = (<h5>Logga in för att köpa!</h5>);
+      cartRelation = (<Typography variant="h5">Logga in för att köpa!</Typography>);
     }
 
-    return(<Paper>
-    <Typography variant="h3">{product[0].Name}</Typography>
-    <Typography variant="subtitle1">Kategori: {product[0].Description[1]}</Typography>
-    <Typography variant="body1">{product[0].Description[0]}</Typography>
-    <ul>{materialList[0]}</ul>
-    <Typography variant="body1">I lager: {showInStock}</Typography>
-    <Typography variant="h4">Pris: {product[0].Price}</Typography>
-    {cartRelation}
-    </Paper>);
+    let background = {
+
+      backgroundColor: 'gray',
+      height: '500px',
+      width: '900px'
+    };
+   //Kör ett stort card med focus
+
+    return(
+      <div className={classes.marginAutoItem}>
+        
+        <Card>
+          <CardActionArea>
+          <CardMedia className={classes.media} image="https://source.unsplash.com/random"/>
+            <CardContent>
+              <Typography variant="h4">{product[0].Name}</Typography>
+              <Typography variant="subtitle1">Kategori: {product[0].Description[1]}</Typography>
+              <Typography variant="body1">{product[0].Description[0]}</Typography>
+              <ul>{materialList[0]}</ul>
+              <Typography variant="body1">I lager: {showInStock}</Typography>
+              <Typography variant="h5">Pris: {product[0].Price}</Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            {cartRelation}
+          </CardActions>
+        </Card>
+        
+    </div>
+    );
 
 }
 

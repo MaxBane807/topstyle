@@ -7,6 +7,7 @@ const CartState = ({children}) => {
 
     const [cart, setCart] = useState([]);
     const [nrOfItems, setNrOfItems] = useState(0);
+    const [totalprice, setTotalPrice] = useState(0);
 
     const addProduct = (product) => {
 
@@ -48,17 +49,24 @@ const CartState = ({children}) => {
         setNrOfItems(0);
     }
 
+    const refreshTotal = () => {
+
+        let calctotalprice = 0;
+        for (let item of cart)
+        {
+            calctotalprice += item.Price;
+        }
+        setTotalPrice(calctotalprice);
+    }
+
     const makeOrder = async customerID => {
 
         //orderDate
         let today = new Date();
         let orderdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         //Totalprice
-        let totalprice = 0;
-        for (let item of cart)
-        {
-            totalprice += item.Price;
-        }
+
+        
 
         let orderID = await saveOrder({customerID,orderdate,totalprice});
         let localcart = cart;
@@ -99,7 +107,9 @@ const CartState = ({children}) => {
         clearCart,
         makeOrder,
         removeProduct,
-        nrOfItems}}>
+        nrOfItems,
+        totalprice,
+        refreshTotal}}>
         {children}
     </CartContext.Provider>);
 

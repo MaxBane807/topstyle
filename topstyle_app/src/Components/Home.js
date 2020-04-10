@@ -42,19 +42,17 @@ const Home = () => {
 
     let list = allProducts.map(item => {
 
-        return(<Grid item xs={5}><ProductOverview Product={item}/></Grid>);
+        return(<Grid item xs={3}><ProductOverview Product={item}/></Grid>);
     });
 
 
-    return(<React.Fragment>
-        
-        
+    return(<React.Fragment>      
         <Switch>
             <Route path={`/Home/:ProductID`}><ProductDetails/></Route>
             <Route path={'/Home'}>
                 <Typography variant="h2">Välkommen till TopStyle!</Typography>
                 <Search/>
-                <Grid container spacing={4}>{list}</Grid>
+                <Grid container spacing={2}>{list}</Grid>
             </Route>
         </Switch>
     </React.Fragment>);

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {NavLink, Redirect,Link} from 'react-router-dom';
 import UserContext from '../Contexts/User/UserContext';
 import CartContext from '../Contexts/Cart/CartContext';
@@ -16,6 +16,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 
+
 const Navigation = () => {
 
     const {LoggedIn,Logout} = useContext(UserContext);
@@ -24,6 +25,13 @@ const Navigation = () => {
 
     let [drawerOpen,setDrawerOpen] = useState(false);
 
+    const [disable,setDisable] = useState(true);
+
+    useEffect(() => {
+        cartToggler();
+
+    },[LoggedIn])
+
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
@@ -31,6 +39,19 @@ const Navigation = () => {
     
         setDrawerOpen(open);
     };
+
+    const cartToggler = () => {
+
+        if (LoggedIn)
+        {
+            setDisable(false);
+        }
+        else
+        {
+            setDisable(true);
+        }
+
+    }
 
    
 
@@ -63,8 +84,8 @@ const Navigation = () => {
     return(<React.Fragment>
         <AppBar position="static">
             <Toolbar>
-                <Button onClick={toggleDrawer(true)}>Meny</Button>
-                <Badge badgeContent={nrOfItems}><ShoppingCartIcon fontSize="large"/></Badge>
+                <IconButton color="inherit" onClick={toggleDrawer(true)}><MenuIcon fontSize="large"/></IconButton>
+                <IconButton color="inherit" disabled={disable} component={Link} to="/ShoppingCart"><Badge badgeContent={nrOfItems}><ShoppingCartIcon fontSize="large"/></Badge></IconButton>
                 <Typography variant="h1">TopStyle</Typography>
             </Toolbar>
         </AppBar>

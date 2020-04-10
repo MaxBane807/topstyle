@@ -54,7 +54,10 @@ const CreateAccount = () => {
     const [phoneError, setPhoneError] = useState(null);
     const [emailError, setEmailError] = useState(null);
 
-    const saveHandler = async () => {
+    const saveHandler = async (e) => {
+
+      e.preventDefault();
+      e.stopPropagation();
 
         let check = await NewUser(usernameRef.current.value,
           passwordRef.current.value,
@@ -72,7 +75,7 @@ const CreateAccount = () => {
           setUserNameTaken(true);
         }
         
-
+        
     }
     const formValidation = useCallback(() => {
 
@@ -184,7 +187,7 @@ const CreateAccount = () => {
         phoneState,
         emailState,
         userNameTaken,
-        formValidation]);
+        ]);
 
     if (redirect)
     {
@@ -194,7 +197,7 @@ const CreateAccount = () => {
     return (<React.Fragment>
         <Typography variant="h3">Skapa användare</Typography>
     <div className={classes.root}>
-        <div>
+        
         <TextField
             required
             onChange={(e) => { setUserNameTaken(false);
@@ -282,12 +285,12 @@ const CreateAccount = () => {
           error={emailError !== null}
         />
 
-        </div>
+        
     </div>
-    <Button onClick={async e => {await saveHandler();}}
+    <Button onClick={async e => {await saveHandler(e);}}
          disabled={disable}
          variant="contained"
-         color="danger"
+         color="secondary"
          size="large"
          className={classes.button}
          startIcon={<SaveIcon />}

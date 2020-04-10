@@ -17,6 +17,8 @@ export const createUser = async user => {
 
     const url = 'http://localhost:8081/CreateUser/';
 
+    console.log("nu körs anropet");
+
     fetch(url,{
         method: "POST",
         body: JSON.stringify(user),

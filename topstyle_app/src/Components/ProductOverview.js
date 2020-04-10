@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 345,
+      maxWidth: 300,
     },
     media: {
       height: 140,
@@ -28,7 +28,8 @@ const ProductOverview = ({Product, Match}) => {
         <CardActionArea>
             <CardMedia className={classes.media} image="https://source.unsplash.com/random"/>
             <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">{Product.Name} {Product.Price} kr</Typography>
+                <Typography gutterBottom variant="h5" component="h2">{Product.Name}</Typography>
+                <Typography gutterBottom variant="h6">{Product.Price} kr</Typography>
             </CardContent>
         </CardActionArea>
         <CardActions>

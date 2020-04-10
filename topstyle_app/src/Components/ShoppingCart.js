@@ -12,15 +12,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Typography } from '@material-ui/core';
 import Button from "@material-ui/core/Button";
 import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const ShoppingCart = () => {
 
-    const {cart,makeOrder,removeProduct,clearCart} = useContext(CartContext);
+    const {cart,makeOrder,removeProduct,clearCart,nrOfItems,totalprice,refreshTotal} = useContext(CartContext);
 
     const {User} = useContext(UserContext);
 
     const [render, setRender] = useState();
     const [redirect, setRedirect] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [disable, setDisabled] = useState(false);
 
     let list = cart.map((x) => {
 
@@ -40,23 +46,63 @@ const ShoppingCart = () => {
 
         await makeOrder(User.CustomerID);
         clearCart();
-        setRedirect(true);
+        setDialogOpen(true);
+    }
+    
+    const checkIfEmpty = () => {
+
+        if(nrOfItems == 0)
+        {
+            setDisabled(true);
+        }
+        else
+        {
+            setDisabled(false);
+        }
     }
 
     useEffect(() => {
+        
+        refreshTotal();
+        checkIfEmpty();
         setRender({});
+        
+
     },[removeProduct]);
     
     if (redirect == true)
     {
-        return (<Redirect to="/Home"/>);
+        return (<React.Fragment>
+            
+            <Redirect to="/Home"/>
+        </React.Fragment>);
     }
 
-    return(<Paper>
+    return(<React.Fragment>
+        <Paper>
             <Typography variant="h2">Varukorg</Typography>
             <List>{list}</List>
-            <Button color="primary" onClick={e => {orderHandler();}}>Beställ</Button>
-        </Paper>);
+            <Typography variant="h5">Totalt: {totalprice} kr</Typography>
+            <Button disabled={disable} color="primary" onClick={e => {orderHandler();}}>Beställ</Button>
+        </Paper>
+        <Dialog
+            open={dialogOpen}
+            onClose={e => {setDialogOpen(false);}}
+            >
+                <DialogContent>
+                     <DialogContentText>
+                        Din beställning är påväg!
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={(e) => {setDialogOpen(false);
+                                                setRedirect(true);}
+                                    } color="secondary" autoFocus>
+                        Bra!
+                    </Button>
+                </DialogActions>
+        </Dialog>
+      </React.Fragment>);
 }
 
 export default ShoppingCart;
