@@ -19,16 +19,14 @@ export const createUser = async user => {
 
     console.log("nu körs anropet");
 
-    fetch(url,{
+    await fetch(url,{
         method: "POST",
         body: JSON.stringify(user),
         headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json"
-        }})
-    .then(function(data) {
-        console.log("Request success: ", "posten skapad", data);
-        });
+        }});
+    
         
 }
 

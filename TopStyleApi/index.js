@@ -124,7 +124,7 @@ app.post('/CreateUser', async function (req, res, next){
         request.input('Email', req.body.email);
         request.execute('InsertOrUpdateCustomer',function(err,recordsets,returnValue,affected){
             if (err) console.log(err);
-
+            res.end();
         });
 
     });
@@ -155,6 +155,7 @@ app.post('/RegisterOneProduct', async function (req, res, next){
         request.input('Amount',req.body.amount);
         request.execute('InsertOrderProduct',function(err,recordsets,returnValue,affected){
             if (err) console.log(err);
+            res.end();
         });
 
     });

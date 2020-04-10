@@ -26,8 +26,15 @@ const CartState = ({children}) => {
             { 
                 if (counter == 0)
                 {
-                    counter += 1;
-                    return (item !== product);                    
+                    if (item !== product){
+                    
+                        return true; 
+                    }
+                    else
+                    {
+                        counter += 1;
+                        return false;
+                    }                 
                 }
                 else
                 {
